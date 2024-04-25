@@ -1,0 +1,41 @@
+Table user {
+  user_id integer [pk,increment,not null]
+  first_name varchar
+  last_name varchar
+  email varchar
+  username varchar
+  adress varchar
+}
+
+Table renting {
+  renting_id integer [pk,increment,not null]
+  fk_user_id integer
+  fk_product_id integer
+  first_payment float
+  monthly_price float
+  order_date date
+  start_date date
+  end_date date 
+}
+
+Table product {
+  product_id integer [pk,increment,not null]
+  product_reference varchar
+  product_brand varchar
+  product_memory varchar
+  product_storage varchar
+  product_processor varchar
+  graphic_card varchar
+  usb integer
+  hdmi integer
+  wifi boolean
+  laptop varchar
+}
+
+Table category {
+  category_id uuid
+}
+
+Ref: "user"."user_id" < "renting"."fk_user_id"
+
+Ref: "product"."product_id" < "renting"."fk_product_id"

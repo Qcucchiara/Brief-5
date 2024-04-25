@@ -1,0 +1,111 @@
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id` BINARY(16) DEFAULT (UUID_TO_BIN(UUID())) PRIMARY KEY NOT NULL,
+  `fk_role_id` BINARY(16) NOT NULL,
+  `first_name` varchar(255),
+  `last_name` varchar(255),
+  `email` varchar(255),
+  `username` varchar(255),
+  `adress` varchar(255),
+  `password` varchar(255),
+  `gdpr` date,
+  `created_at` date,
+  `updated_at` date
+);
+
+DROP TABLE IF EXISTS `ticket`;
+CREATE TABLE `ticket` (
+  `id` BINARY(16) DEFAULT (UUID_TO_BIN(UUID())) PRIMARY KEY NOT NULL,
+  `fk_user_id` BINARY(16) NOT NULL,
+  `category` varchar(255),
+  `content` varchar(255),
+  `created_at` date,
+  `updated_at` date
+);
+
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role` (
+  `id` BINARY(16) DEFAULT (UUID_TO_BIN(UUID())) PRIMARY KEY NOT NULL,
+  `role_name` varchar(255),
+  `created_at` date,
+  `updated_at` date
+);
+
+DROP TABLE IF EXISTS `renting`;
+CREATE TABLE `renting` (
+  `id` BINARY(16) DEFAULT (UUID_TO_BIN(UUID())) PRIMARY KEY NOT NULL,
+  `fk_customer_id` BINARY(16) NOT NULL,
+  `fk_seller_id` BINARY(16),
+  `fk_computer_id` BINARY(16),
+  `monthly_price` float,
+  `order_date` date,
+  `start_date` date,
+  `end_date` date,
+  `return_status` varchar(255),
+  `created_at` date,
+  `updated_at` date
+);
+
+DROP TABLE IF EXISTS `payment`;
+CREATE TABLE `payment` (
+  `id` BINARY(16) DEFAULT (UUID_TO_BIN(UUID())) PRIMARY KEY NOT NULL,
+  `fk_renting_id` BINARY(16) NOT NULL,
+  `month` date,
+  `price` float,
+  `description` varchar(255),
+  `is_paid` boolean,
+  `created_at` date,
+  `updated_at` date
+);
+
+DROP TABLE IF EXISTS `computer`;
+CREATE TABLE `computer` (
+  `id` BINARY(16) DEFAULT (UUID_TO_BIN(UUID())) PRIMARY KEY NOT NULL,
+  `name` varchar(255),
+  `brand` varchar(255),
+  `memory` varchar(255),
+  `storage` varchar(255),
+  `processor` varchar(255),
+  `graphic_card` varchar(255),
+  `usb` integer,
+  `hdmi` integer,
+  `wifi` boolean,
+  `laptop` varchar(255),
+  `current_stock` integer,
+  `created_at` date,
+  `updated_at` date
+);
+
+DROP TABLE IF EXISTS `reference`;
+CREATE TABLE `reference` (
+  `id` BINARY(16) DEFAULT (UUID_TO_BIN(UUID())) PRIMARY KEY NOT NULL,
+  `fk_computer_id` BINARY(16) NOT NULL,
+  `name` varchar(255),
+  `condition` varchar(255),
+  `stock` integer,
+  `created_at` date,
+  `updated_at` date
+);
+
+ALTER TABLE `renting` ADD FOREIGN KEY (`fk_customer_id`) REFERENCES `user` (`id`);
+
+ALTER TABLE `user` ADD FOREIGN KEY (`fk_role_id`) REFERENCES `role` (`id`);
+
+ALTER TABLE `renting` ADD FOREIGN KEY (`fk_computer_id`) REFERENCES `computer` (`id`);
+
+ALTER TABLE `reference` ADD FOREIGN KEY (`fk_computer_id`) REFERENCES `computer` (`id`);
+
+ALTER TABLE `renting` ADD FOREIGN KEY (`fk_seller_id`) REFERENCES `user` (`id`);
+
+ALTER TABLE `payment` ADD FOREIGN KEY (`fk_renting_id`) REFERENCES `renting` (`id`);
+
+ALTER TABLE `ticket` ADD FOREIGN KEY (`fk_user_id`) REFERENCES `user` (`id`);
+
+
+ALTER TABLE `ticket` ENGINE=InnoDB;
+ALTER TABLE `renting` ENGINE=InnoDB;
+ALTER TABLE `payment` ENGINE=InnoDB;
+ALTER TABLE `renting` ENGINE=InnoDB;
+ALTER TABLE `user` ENGINE=InnoDB;
+ALTER TABLE `renting` ENGINE=InnoDB;
+ALTER TABLE `reference` ENGINE=InnoDB;
