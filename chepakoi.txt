@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `id` BINARY(16) DEFAULT (UUID_TO_BIN(UUID())) PRIMARY KEY NOT NULL,
+  `id` BINARY(16) PRIMARY KEY NOT NULL,
   `fk_role_id` BINARY(16) NOT NULL,
   `first_name` varchar(255),
   `last_name` varchar(255),
@@ -15,7 +15,7 @@ CREATE TABLE `user` (
 
 DROP TABLE IF EXISTS `ticket`;
 CREATE TABLE `ticket` (
-  `id` BINARY(16) DEFAULT (UUID_TO_BIN(UUID())) PRIMARY KEY NOT NULL,
+  `id` BINARY(16) PRIMARY KEY NOT NULL,
   `fk_user_id` BINARY(16) NOT NULL,
   `category` varchar(255),
   `content` varchar(255),
@@ -25,7 +25,7 @@ CREATE TABLE `ticket` (
 
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
-  `id` BINARY(16) DEFAULT (UUID_TO_BIN(UUID())) PRIMARY KEY NOT NULL,
+  `id` BINARY(16) PRIMARY KEY NOT NULL,
   `role_name` varchar(255),
   `created_at` date,
   `updated_at` date
@@ -33,7 +33,7 @@ CREATE TABLE `role` (
 
 DROP TABLE IF EXISTS `renting`;
 CREATE TABLE `renting` (
-  `id` BINARY(16) DEFAULT (UUID_TO_BIN(UUID())) PRIMARY KEY NOT NULL,
+  `id` BINARY(16) PRIMARY KEY NOT NULL,
   `fk_customer_id` BINARY(16) NOT NULL,
   `fk_seller_id` BINARY(16),
   `fk_computer_id` BINARY(16),
@@ -48,7 +48,7 @@ CREATE TABLE `renting` (
 
 DROP TABLE IF EXISTS `payment`;
 CREATE TABLE `payment` (
-  `id` BINARY(16) DEFAULT (UUID_TO_BIN(UUID())) PRIMARY KEY NOT NULL,
+  `id` BINARY(16) PRIMARY KEY NOT NULL,
   `fk_renting_id` BINARY(16) NOT NULL,
   `month` date,
   `price` float,
@@ -60,7 +60,7 @@ CREATE TABLE `payment` (
 
 DROP TABLE IF EXISTS `computer`;
 CREATE TABLE `computer` (
-  `id` BINARY(16) DEFAULT (UUID_TO_BIN(UUID())) PRIMARY KEY NOT NULL,
+  `id` BINARY(16) PRIMARY KEY NOT NULL,
   `name` varchar(255),
   `brand` varchar(255),
   `memory` varchar(255),
@@ -78,7 +78,7 @@ CREATE TABLE `computer` (
 
 DROP TABLE IF EXISTS `reference`;
 CREATE TABLE `reference` (
-  `id` BINARY(16) DEFAULT (UUID_TO_BIN(UUID())) PRIMARY KEY NOT NULL,
+  `id` BINARY(16) PRIMARY KEY NOT NULL,
   `fk_computer_id` BINARY(16) NOT NULL,
   `name` varchar(255),
   `condition` varchar(255),

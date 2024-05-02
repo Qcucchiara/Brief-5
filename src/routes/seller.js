@@ -1,16 +1,22 @@
 const express = require('express');
+const {
+  createComputer,
+  updateComputer,
+  readAllComputer,
+  deleteComputer,
+} = require('../Controllers/ctrlComputer');
+const { createPayment } = require('../Controllers/ctrlPayment');
+const { allRentingByComputer } = require('../Controllers/ctrlComputerRenting');
 
 const router = express.Router();
 
-router.get('/read_all_products', readAllProducts);
-router.get('/read_my_rentings', verifyToken, readMyRentings);
-router.get('/read_my_payments', verifyToken, readMyPayments);
-router.post('/create_renting', verifyToken, createRenting);
-// TODO: ajouter une table ticket à la base de donnée, que les Sellers peuvent accéder pour voir les demandes des clients.
-
-router.post('/create_ticket', verifyToken, createTicket);
-router.patch('/update_renting_date', verifyToken, updateRentingDate);
-router.patch('/update_payment_status', verifyToken, updatePaymentStatus);
-// TODO: ajouter un delete account, un cancel renting, etc... (avec autorisation j'imagine)
+router.route('/add/computer').post(createComputer);
+router.route('/add/payment').post(createPayment);
+router.route('/read/computer/all').get(readAllComputer);
+router.route('/update/computer/:computer_id').patch(updateComputer);
+router.route('/delete/computer/:computer_id').delete(deleteComputer);
+router
+  .route('/read/renting/by_computer/:computer_id')
+  .get(allRentingByComputer);
 
 module.exports = router;
